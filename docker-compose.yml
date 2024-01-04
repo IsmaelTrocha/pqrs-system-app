@@ -1,0 +1,30 @@
+version: "3.0"
+
+services:
+  db-inventory:
+    container_name: db-inventory
+    image: postgres:15.2
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: pqrs_request
+      POSTGRES_USER: ismael
+      POSTGRES_PASSWORD: Test123
+    ports:
+      - "5433:5433"
+    expose:
+      - 5433
+    command: -p 5433
+
+    ### MySQL database for Orders
+  db-orders:
+    container_name: db-orders
+    image: mysql:8.0.33
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: pqrs_images
+      MYSQL_USER: uncledave
+      MYSQL_PASSWORD: Test123
+    ports:
+      - "3306:3306"
+    expose:
+      - 3306
