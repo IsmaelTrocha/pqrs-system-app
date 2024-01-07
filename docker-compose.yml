@@ -1,12 +1,12 @@
 version: "3.0"
 
 services:
-  db-inventory:
-    container_name: db-inventory
+  db-images:
+    container_name: db-images
     image: postgres:15.2
     restart: unless-stopped
     environment:
-      POSTGRES_DB: pqrs_request
+      POSTGRES_DB: pqrs-images
       POSTGRES_USER: ismael
       POSTGRES_PASSWORD: Test123
     ports:
@@ -16,15 +16,66 @@ services:
     command: -p 5433
 
     ### MySQL database for Orders
-  db-orders:
-    container_name: db-orders
+  db-requests:
+    container_name: db-requests
     image: mysql:8.0.33
     restart: unless-stopped
     environment:
-      MYSQL_DATABASE: pqrs_images
-      MYSQL_USER: uncledave
+      MYSQL_DATABASE: pqrs_requests
+      MYSQL_USER: ismael
       MYSQL_PASSWORD: Test123
     ports:
-      - "3306:3306"
+      - "3307:3307"
     expose:
-      - 3306
+      - 3307
+
+  db-keycloak:
+    container_name: db-keycloak
+    image: postgres:15.2
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: pqrs-keycloak
+      POSTGRES_USER: ismael
+      POSTGRES_PASSWORD: Test123
+    ports:
+      - "5434:5434"
+    expose:
+      - 5434
+    command: -p 5434
+
+
+  keycloak:
+    container_name: keycloak
+    image: quay.io/keycloak/keycloak:21.0.2
+    command: ["start-dev"]
+    ports:
+      - "8181:8181"
+    expose:
+      - 8181
+    depends_on:
+      - db-keycloak
+    environment:
+      DB_VENDOR: POSTGRES
+      DB_ADDR: db-keycloak
+      DB_DATABASE: db_keycloak
+      DB_PORT: 5434
+      DB_USER: ismael
+      DB_PASSWORD: Test123
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_HTTP_PORT: 8181
+
+  db-media:
+    image: mongo:latest
+    container_name: my-mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb-data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ismael
+      MONGO_INITDB_ROOT_PASSWORD: Test123
+
+volumes:
+  mongodb-data:
+

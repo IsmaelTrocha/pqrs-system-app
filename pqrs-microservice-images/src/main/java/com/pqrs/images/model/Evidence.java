@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @NoArgsConstructor
-public class MultipartUpload {
+public class Evidence {
 
   private Long id;
   private Long requestId;
