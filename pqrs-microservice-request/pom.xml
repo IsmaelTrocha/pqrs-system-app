@@ -9,7 +9,7 @@
 	</parent>
 	<groupId>com.pqrs</groupId>
 	<artifactId>pqrs-microservice-request</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0-SNAPSHOT</version>
 	<name>pqrs-microservice-request</name>
 	<description>SpringBoot PQRS Microservice Request</description>
 	<properties>
@@ -51,11 +51,12 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
 		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<version>1.18.30</version>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-webflux</artifactId>
 		</dependency>
+
 	</dependencies>
 
 	<build>
