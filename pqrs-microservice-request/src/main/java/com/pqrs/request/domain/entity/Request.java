@@ -11,5 +11,7 @@ public class Request {
 
   private Long id;
   private String code;
+  private String description;
+  private String customerEmail;
 
 }
